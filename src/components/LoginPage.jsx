@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import { Film, Mail, Lock, Eye, EyeOff, User } from 'lucide-react';
 
-interface LoginPageProps {
-  onLogin: (userData: { name: string; email: string }) => void;
-}
-
-const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+const LoginPage = ({ onLogin }) => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
@@ -14,9 +10,9 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     password: '',
     confirmPassword: ''
   });
-  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [errors, setErrors] = useState({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     // Clear error when user starts typing
@@ -26,7 +22,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   };
 
   const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
+    const newErrors = {};
 
     if (isSignUp && !formData.name.trim()) {
       newErrors.name = 'Name is required';
@@ -52,7 +48,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
       onLogin({

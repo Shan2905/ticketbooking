@@ -2,32 +2,7 @@ import React, { useState } from 'react';
 import { Calendar, Clock, Star, Users, Film, Ticket, ArrowLeft } from 'lucide-react';
 import LoginPage from './components/LoginPage';
 
-interface Movie {
-  id: number;
-  title: string;
-  genre: string;
-  duration: string;
-  rating: number;
-  image: string;
-  description: string;
-  showtimes: string[];
-  price: number;
-}
-
-interface Seat {
-  id: string;
-  row: string;
-  number: number;
-  isBooked: boolean;
-  isSelected: boolean;
-}
-
-interface User {
-  name: string;
-  email: string;
-}
-
-const movies: Movie[] = [
+const movies = [
   {
     id: 1,
     title: "The Dark Knight",
@@ -74,8 +49,8 @@ const movies: Movie[] = [
   }
 ];
 
-const generateSeats = (): Seat[] => {
-  const seats: Seat[] = [];
+const generateSeats = () => {
+  const seats = [];
   const rows = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
   
   for (const row of rows) {
@@ -94,14 +69,14 @@ const generateSeats = (): Seat[] => {
 };
 
 function App() {
-  const [user, setUser] = useState<User | null>(null);
-  const [currentView, setCurrentView] = useState<'movies' | 'booking'>('movies');
-  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-  const [selectedShowtime, setSelectedShowtime] = useState<string>('');
-  const [seats, setSeats] = useState<Seat[]>(generateSeats());
-  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
+  const [user, setUser] = useState(null);
+  const [currentView, setCurrentView] = useState('movies');
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [selectedShowtime, setSelectedShowtime] = useState('');
+  const [seats, setSeats] = useState(generateSeats());
+  const [selectedSeats, setSelectedSeats] = useState([]);
 
-  const handleLogin = (userData: User) => {
+  const handleLogin = (userData) => {
     setUser(userData);
   };
 
@@ -114,12 +89,12 @@ function App() {
     setSeats(generateSeats());
   };
 
-  const handleMovieSelect = (movie: Movie) => {
+  const handleMovieSelect = (movie) => {
     setSelectedMovie(movie);
     setCurrentView('booking');
   };
 
-  const handleSeatClick = (seatId: string) => {
+  const handleSeatClick = (seatId) => {
     const seat = seats.find(s => s.id === seatId);
     if (seat && !seat.isBooked) {
       setSeats(prev => prev.map(s => 
